@@ -647,7 +647,6 @@ func (up *UpSessionBTC) handleMiningNotify(rpcData *JSONRPCLineBTC, jsonBytes []
 		glog.Warning(up.id, err.Error(), ": ", string(jsonBytes))
 		return
 	}
-	job
 	bytes, err := job.ToNotifyLine(false)
 	if err != nil {
 		glog.Warning(up.id, "failed to convert job to JSON: ", err.Error(), "; ", string(jsonBytes))

@@ -1,0 +1,18 @@
+# binary
+btcagent
+*.exe
+
+# ide dir
+.vscode/
+
+# build dir
+build/
+
+# config file
+*.json
+!*.default.json
+
+# log file
+*.log
+log/
+

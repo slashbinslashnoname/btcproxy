@@ -709,7 +709,10 @@ func (up *UpSessionBTC) handleSubmitShare(e EventSubmitShareBTC) {
 		up.submitIDs[up.submitIndex] = SubmitID{e.ID, e.Message.SessionID}
 		up.submitIndex++
 	} else {
-		jsonData := &JSONRPCRequest{ID: e.ID, Method: "mining.submit", Params: params}
+
+		sessionIDString := Uint32ToHex(uint32(e.Message.SessionID))
+
+		jsonData := &JSONRPCRequestExtra{ID: e.ID, Method: "mining.submit", Params: params, Extra: sessionIDString}
 		bytes, _ := jsonData.ToJSONBytesLine()
 
 		up.writeBytes(bytes)

@@ -271,8 +271,14 @@ func (down *DownSessionBTC) sendReconnectRequest() {
 }
 
 func (down *DownSessionBTC) parseSubscribeRequest(request *JSONRPCLineBTC) (result interface{}, err *StratumError) {
-	extranonce := down.manager.upSessionManagers[down.SubAccountName()].extranonce
-	miningNotify := down.manager.upSessionManagers[down.SubAccountName()].miningNotify
+	/*
+		extranonce := down.manager.upSessionManagers[down.SubAccountName()].extranonce
+		miningNotify := down.manager.upSessionManagers[down.SubAccountName()].miningNotify
+	*/
+	sessionIDString := Uint32ToHex(uint32(down.sessionID))
+
+	extranonce := sessionIDString
+	miningNotify := sessionIDString
 
 	if len(request.Params) >= 1 {
 		down.clientAgent, _ = request.Params[0].(string)

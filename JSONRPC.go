@@ -11,6 +11,14 @@ type JSONRPCRequest struct {
 	Params []interface{} `json:"params"`
 }
 
+// JSONRPCRequest JSON RPC 请求的数据结构
+type JSONRPCRequestExtra struct {
+	ID     interface{}   `json:"id"`
+	Method string        `json:"method"`
+	Params []interface{} `json:"params"`
+	Extra  string        `json:"extra"`
+}
+
 // JSONRPCResponse JSON RPC 响应的数据结构
 type JSONRPCResponse struct {
 	ID     interface{} `json:"id"`
@@ -134,7 +142,19 @@ func (rpcData *JSONRPCRequest) ToJSONBytes() ([]byte, error) {
 	return json.Marshal(rpcData)
 }
 
+// ToJSONBytes 将 JSONRPCRequest 对象转换为 JSON 字节序列
+func (rpcData *JSONRPCRequestExtra) ToJSONBytes() ([]byte, error) {
+	return json.Marshal(rpcData)
+}
+
 func (rpcData *JSONRPCRequest) ToJSONBytesLine() (bytes []byte, err error) {
+	bytes, err = rpcData.ToJSONBytes()
+	if err == nil {
+		bytes = append(bytes, '\n')
+	}
+	return
+}
+func (rpcData *JSONRPCRequestExtra) ToJSONBytesLine() (bytes []byte, err error) {
 	bytes, err = rpcData.ToJSONBytes()
 	if err == nil {
 		bytes = append(bytes, '\n')

@@ -692,7 +692,13 @@ func (up *UpSessionBTC) recvJSONRPC(e EventRecvJSONRPCBTC) {
 	case "conn_test":
 		// ignore
 	default:
-		glog.Info(up.id, "[TODO] pool response: ", rpcData)
+		switch e.RPCData.Result {
+		case true:
+			up.sendSubmitResponse(up.submitIndex, e.RPCData.ID, STATUS_ACCEPT)
+		case false:
+			up.sendSubmitResponse(up.submitIndex, e.RPCData.ID, STATUS_INVALID_SOLUTION)
+		}
+
 	}
 }
 
@@ -716,6 +722,7 @@ func (up *UpSessionBTC) handleSubmitShare(e EventSubmitShareBTC) {
 		bytes, _ := jsonData.ToJSONBytesLine()
 
 		up.writeBytes(bytes)
+
 	}
 
 }

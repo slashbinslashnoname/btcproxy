@@ -463,6 +463,7 @@ func (down *DownSessionBTC) submitResponse(e EventSubmitResponse) {
 		response.Result = true
 	} else {
 		response.Error = e.Status.ToJSONRPCArray(nil)
+		response.Result = false
 	}
 
 	_, err := down.writeJSONResponse(&response)
